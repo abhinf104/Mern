@@ -1,0 +1,30 @@
+C:\
+└── Users\
+    └── abhin\
+        └── Desktop\
+            └── CS Courses\
+                └── frontend\
+                    └── Node\
+                        └── node_basic\
+                            └── builtInModule\
+                                ├── globalVar.js
+                                └── node_modules\
+                                    └── moduleA
+                        └── node_modules\
+                            └── moduleB
+                    └── node_modules\
+                        └── moduleC
+                └── node_modules\
+                    └── moduleD
+            └── node_modules\
+                └── moduleE
+        └── node_modules\
+            └── moduleF
+    └── node_modules\
+        └── moduleG
+└── node_modules\
+    └── moduleH
+
+if you require moduleA, it will be resolved from C:\\Users\\abhin\\Desktop\\CS Courses\\frontend\\Node\\node_basic\\builtInModule\\node_modules. If you require moduleB, it will be resolved from C:\\Users\\abhin\\Desktop\\CS Courses\\frontend\\Node\\node_basic\\node_modules, and so on.
+
+If the module is not found in any of these directories, Node.js will throw a "module not found" error.
