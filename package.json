@@ -1,0 +1,13 @@
+{
+  "name": "node_basic",
+  "version": "1.0.0",
+  "description": "Welcome to my Node.js and Express.js learning repository! This repository is a collection of all the concepts, examples, and projects I've learned and worked on while studying Node.js and Express.js.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
