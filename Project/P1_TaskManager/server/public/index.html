@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task Manager - Project Summary</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Task Manager Project Summary</h1>
+    </header>
+    <main>
+      <section>
+        <h2>Overview</h2>
+        <p>
+          This project is a Task Manager application built with Node.js,
+          Express, and MongoDB. It allows users to create, read, update, and
+          delete tasks.
+        </p>
+      </section>
+      <section>
+        <h2>Major Learnings</h2>
+        <ul>
+          <li>Arranging code in different folders</li>
+          <li>Creating and handling routes</li>
+          <li>Using middlewares</li>
+          <li>Defining and using models</li>
+          <li>Connecting to a database</li>
+          <li>Error handling</li>
+          <li>Writing controllers</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Functionality</h2>
+        <ul>
+          <li>
+            <strong>Get All Tasks:</strong> Fetch all tasks from the database
+            using the <code>GET /tasks</code> endpoint. Implemented in the
+            <a href="../controller/tasks.js">getTasks</a> function.
+          </li>
+          <li>
+            <strong>Create Task:</strong> Create a new task using the
+            <code>POST /tasks</code> endpoint. Implemented in the
+            <a href="../controller/tasks.js">postTasks</a> function.
+          </li>
+          <li>
+            <strong>Get Task by ID:</strong> Fetch a single task by its ID using
+            the <code>GET /tasks/:id</code> endpoint. Implemented in the
+            <a href="../controller/tasks.js">getId</a> function.
+          </li>
+          <li>
+            <strong>Update Task:</strong> Update a task by its ID using the
+            <code>PATCH /tasks/:id</code> endpoint. Implemented in the
+            <a href="../controller/tasks.js">patchId</a> function.
+          </li>
+          <li>
+            <strong>Delete Task:</strong> Delete a task by its ID using the
+            <code>DELETE /tasks/:id</code> endpoint. Implemented in the
+            <a href="../controller/tasks.js">deleteId</a> function.
+          </li>
+        </ul>
+      </section>
+      <section>
+        <h2>Middleware</h2>
+        <ul>
+          <li>
+            <strong>Async Wrapper:</strong> A middleware to handle asynchronous
+            functions and avoid repetitive try-catch blocks. Defined in
+            <a href="../middleware/async.js">asyncWrapper</a>.
+          </li>
+          <li>
+            <strong>Error Handler:</strong> A middleware to handle errors and
+            send appropriate responses. Defined in
+            <a href="../middleware/error-handler.js">errorHandler</a>.
+          </li>
+        </ul>
+      </section>
+      <section>
+        <h2>Database Connection</h2>
+        <p>
+          The project connects to a MongoDB database using Mongoose. The
+          connection logic is defined in
+          <a href="../db/connect.js">connectDB</a>.
+        </p>
+      </section>
+      <section>
+        <h2>Models</h2>
+        <p>
+          The Task model is defined using Mongoose schema in
+          <a href="../models/Task.js">Task.js</a>.
+        </p>
+      </section>
+      <section>
+        <h2>Routes</h2>
+        <p>
+          The routes for the task-related endpoints are defined in
+          <a href="../routes/tasks.js">tasks.js</a>.
+        </p>
+      </section>
+      <section>
+        <h2>Environment Configuration</h2>
+        <p>
+          Environment variables are managed using a <code>.env</code> file,
+          which is ignored by Git as specified in the .gitignore file.
+        </p>
+      </section>
+    </main>
+    <footer>
+      <p>&copy; 2023 Task Manager</p>
+    </footer>
+  </body>
+</html>

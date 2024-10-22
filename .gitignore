@@ -1,8 +1,8 @@
-# Node modules
-node_modules/
+# Ignore all .env files
+**/*.env
 
-# Environment variables
-.env
+# Ignore all node_modules folders
+**/node_modules/
 
 # VS Code settings
 .vscode/
