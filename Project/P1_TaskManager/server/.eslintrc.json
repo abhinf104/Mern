@@ -1,37 +1,43 @@
 {
-    "extends": [
-      "eslint:recommended",
-      "plugin:import/errors",
-      "plugin:react/recommended",
-      "plugin:jsx-a11y/recommended",
-      "plugin:react-hooks/recommended",
-      "prettier"
-    ],
-    "rules": {
-      "react/prop-types": 0,
-      "react/react-in-jsx-scope": 0
+  // Extending base configurations and plugins
+  "extends": [
+    "eslint:recommended", // Use recommended ESLint rules
+    "plugin:import/errors", // Use import plugin to handle import/export errors
+    "plugin:react/recommended", // Use recommended React rules
+    "plugin:jsx-a11y/recommended", // Use recommended accessibility rules for JSX
+    "plugin:react-hooks/recommended", // Use recommended rules for React hooks
+    "prettier" // Integrate Prettier for code formatting
+  ],
+  "rules": {
+    // Custom rules
+    "react/prop-types": 0, // Disable prop-types rule for React components
+    "react/react-in-jsx-scope": 0 // Disable rule requiring React in scope for JSX
+  },
+  "plugins": [
+    "react", // React plugin for ESLint
+    "import", // Import plugin for ESLint
+    "jsx-a11y" // Accessibility plugin for JSX
+  ],
+  "parserOptions": {
+    "ecmaVersion": 2022, // Use ECMAScript 2022 syntax
+    "sourceType": "module", // Enable ES6 modules
+    "ecmaFeatures": {
+      "jsx": true // Enable JSX syntax
+    }
+  },
+  "env": {
+    "es6": true, // Enable ES6 global variables
+    "browser": true, // Enable browser global variables
+    "node": true // Enable Node.js global variables
+  },
+  "settings": {
+    "react": {
+      "version": "detect" // Automatically detect the React version
     },
-    "plugins": ["react", "import", "jsx-a11y"],
-    "parserOptions": {
-      "ecmaVersion": 2022,
-      "sourceType": "module",
-      "ecmaFeatures": {
-        "jsx": true
-      }
-    },
-    "env": {
-      "es6": true,
-      "browser": true,
-      "node": true
-    },
-    "settings": {
-      "react": {
-        "version": "detect"
-      },
-      "import/resolver": {
-        "node": {
-          "extensions": [".js", ".jsx"]
-        }
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx"] // Resolve these extensions for imports
       }
     }
   }
+}
