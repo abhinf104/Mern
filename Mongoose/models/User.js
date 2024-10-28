@@ -17,7 +17,7 @@ const UserSchema = new mongoose.Schema(
     email: {
       type: String, // Email of the user
       // unique: true, // Uncomment to enforce unique email
-      // required: true, // Uncomment to make email required
+      required: [true, "Email is must "], // Uncomment to make email required
       lowercase: true, // Convert email to lowercase
     },
     password: mongoose.Schema({
@@ -38,6 +38,21 @@ const UserSchema = new mongoose.Schema(
       city: String, // City in the address
       state: String, // State in the address
     }),
+    continent: {
+      type: String,
+      enum: {
+        values: [
+          "Asia",
+          "Europe",
+          "North America",
+          "South America",
+          "Africa",
+          "Antarctica",
+          "Australia",
+        ],
+        message: "{VALUE} is not supported",
+      },
+    },
   },
   {
     validateBeforeSave: false, // Disable automatic validation before save

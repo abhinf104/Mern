@@ -7,3 +7,5 @@
 # VS Code settings
 .vscode/
 
+/cli/
+
