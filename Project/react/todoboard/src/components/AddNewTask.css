@@ -1,0 +1,14 @@
+.addNew {
+  position: fixed;
+  width: 30%;
+  border: 4pt solid black;
+  border-radius: 0.25rem;
+  padding: 8pt;
+  top: 75pt;
+  left: 8pt;
+}
+button {
+  display: block;
+  width: 8rem;
+  margin: 0.25rem auto;
+}

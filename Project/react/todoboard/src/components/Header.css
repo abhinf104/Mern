@@ -1,0 +1,11 @@
+header h1 {
+  display: block;
+  align-items: center;
+}
+.toggle {
+  display: absolute;
+  position: fixed;
+  left: 90vw;
+  top: -0.1rem;
+  font-size: 3rem;
+}
