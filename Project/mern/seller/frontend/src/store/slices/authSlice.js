@@ -6,7 +6,7 @@ const login = createAsyncThunk(
   "auth/login",
   async (sellerData, { rejectWithValue }) => {
     try {
-      const data = await axios.get("/api/login", sellerData);
+      const data = await axios.post("/api/login", sellerData);
       return data;
     } catch (err) {
       rejectWithValue(err.response.data || "Failed to Authenticate");
@@ -19,7 +19,7 @@ const authSlice = createSlice({
   initialState: authInitialState,
   reducers: {
     logout: (state) => {
-      state.user = null;
+      state.sellerId = null;
       state.isAuthenticated = false;
       state.token = null;
       localStorage.removeItem("token"); //removing token from localstorage
@@ -32,11 +32,13 @@ const authSlice = createSlice({
       })
       .addCase(login.fulfilled, (state, action) => {
         state.token = action.payload.token;
+        state.sellerId = action.payload.sellerId;
         state.isLoading = false;
         state.isAuthenticated = true;
         localStorage.setItem("token", action.payload.token); // Store token in local storage
       })
       .addCase(login.rejected, (state) => {
+        state.sellerId = null;
         state.isLoading = false;
         state.error = true;
       });

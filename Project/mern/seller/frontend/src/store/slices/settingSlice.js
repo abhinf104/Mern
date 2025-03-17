@@ -30,6 +30,22 @@ export const editStoreInfo = createAsyncThunk(
     }
   }
 );
+export const getShopDetails = createAsyncThunk(
+  "setting/getShopDetails",
+  async (sellerId, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem("token");
+      const res = await axios.get(`api/getShopDetails/${sellerId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`, // Include token in headers
+        },
+      });
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(err.message);
+    }
+  }
+);
 
 const settingSlice = createSlice({
   name: "setting",
@@ -62,6 +78,19 @@ const settingSlice = createSlice({
         state.success = true;
       })
       .addCase(editStoreInfo.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+      .addCase(getShopDetails.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(getShopDetails.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.shop = action.payload;
+        state.success = true;
+      })
+      .addCase(getShopDetails.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       });

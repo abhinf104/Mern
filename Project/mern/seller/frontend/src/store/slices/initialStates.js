@@ -1,6 +1,6 @@
 // ---------auth-----------------
 const authInitialState = {
-  user: null,
+  sellerId: null,
   token: null,
   isLoading: null,
   error: null,

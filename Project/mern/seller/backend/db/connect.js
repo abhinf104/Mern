@@ -5,7 +5,10 @@ const mongoose = require("mongoose");
 const ConnectDB = async (url) => {
   try {
     // Attempt to connect to the MongoDB database with the provided URL
-    await mongoose.connect(url);
+    await mongoose.connect(url, {
+      useNewUrlParser: true, // Use the new URL parser
+      useUnifiedTopology: true, // Use the new Server Discover and Monitoring engine
+    });
     console.log("MongoDB connected"); // Log success message
   } catch (error) {
     // Log any errors that occur during connection
