@@ -1,0 +1,641 @@
+{
+  "info": {
+    "_postman_id": "1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p",
+    "name": "BlogMaster API2",
+    "description": "A comprehensive collection for testing the BlogMaster API endpoints",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Test User\",\n    \"email\": \"test@example.com\",\n    \"password\": \"password123\",\n    \"role\": \"author\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/register",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "register"]
+            },
+            "description": "Register a new user"
+          },
+          "response": []
+        },
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.token) {",
+                  "    pm.environment.set(\"authToken\", jsonData.token);",
+                  "    pm.environment.set(\"userId\", jsonData.user._id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"test@example.com\",\n    \"password\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "login"]
+            },
+            "description": "Log in a user"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Current User",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auth/me",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "me"]
+            },
+            "description": "Get the current logged-in user's profile"
+          },
+          "response": []
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auth/logout",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "logout"]
+            },
+            "description": "Log out the current user"
+          },
+          "response": []
+        }
+      ],
+      "description": "Authentication endpoints"
+    },
+    {
+      "name": "Posts",
+      "item": [
+        {
+          "name": "Get All Posts",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/posts?page=1&limit=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["posts"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                },
+                {
+                  "key": "search",
+                  "value": "test",
+                  "disabled": true
+                },
+                {
+                  "key": "category",
+                  "value": "Technology",
+                  "disabled": true
+                },
+                {
+                  "key": "tag",
+                  "value": "javascript",
+                  "disabled": true
+                },
+                {
+                  "key": "sort",
+                  "value": "newest",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Get all posts with optional filtering and pagination"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Post",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData && jsonData.post && jsonData.post._id) {",
+                  "    pm.environment.set(\"postId\", jsonData.post._id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"Test Post from Postman\",\n    \"content\": \"This is a test post created via Postman.\",\n    \"categories\": [\"Test\", \"API\"],\n    \"tags\": [\"test\", \"api\", \"postman\"],\n    \"status\": \"published\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/posts",
+              "host": ["{{baseUrl}}"],
+              "path": ["posts"]
+            },
+            "description": "Create a new blog post"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Post",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/posts/{{postId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["posts", "{{postId}}"]
+            },
+            "description": "Get a single post by ID"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Post",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"Updated Test Post\",\n    \"content\": \"This post has been updated via Postman.\",\n    \"categories\": [\"Test\", \"Updated\"],\n    \"tags\": [\"test\", \"api\", \"updated\"]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/posts/{{postId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["posts", "{{postId}}"]
+            },
+            "description": "Update an existing post"
+          },
+          "response": []
+        },
+        {
+          "name": "Like Post",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/posts/{{postId}}/like",
+              "host": ["{{baseUrl}}"],
+              "path": ["posts", "{{postId}}", "like"]
+            },
+            "description": "Like or unlike a post"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Posts by Author",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/posts/author/{{userId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["posts", "author", "{{userId}}"]
+            },
+            "description": "Get all posts by a specific author"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Post Metadata",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/posts/metadata",
+              "host": ["{{baseUrl}}"],
+              "path": ["posts", "metadata"]
+            },
+            "description": "Get categories and tags metadata"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Post",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/posts/{{postId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["posts", "{{postId}}"]
+            },
+            "description": "Delete a post (soft delete)"
+          },
+          "response": []
+        }
+      ],
+      "description": "Blog post management endpoints"
+    },
+    {
+      "name": "Comments",
+      "item": [
+        {
+          "name": "Get Post Comments",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/comments/post/{{postId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["comments", "post", "{{postId}}"]
+            },
+            "description": "Get all comments for a post"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Comment",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData && jsonData.comment && jsonData.comment._id) {",
+                  "    pm.environment.set(\"commentId\", jsonData.comment._id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"content\": \"This is a test comment from Postman.\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/comments/post/{{postId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["comments", "post", "{{postId}}"]
+            },
+            "description": "Create a new comment on a post"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Reply Comment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"content\": \"This is a reply comment from Postman.\",\n    \"parentId\": \"{{commentId}}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/comments/post/{{postId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["comments", "post", "{{postId}}"]
+            },
+            "description": "Create a reply to another comment"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Comment",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"content\": \"This comment has been updated via Postman.\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/comments/{{commentId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["comments", "{{commentId}}"]
+            },
+            "description": "Update an existing comment"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Comment",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/comments/{{commentId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["comments", "{{commentId}}"]
+            },
+            "description": "Delete a comment"
+          },
+          "response": []
+        }
+      ],
+      "description": "Comment management endpoints"
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Update Profile",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Updated Test User\",\n    \"bio\": \"This is a test bio updated via Postman.\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users/profile",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "profile"]
+            },
+            "description": "Update the current user's profile"
+          },
+          "response": []
+        },
+        {
+          "name": "Get User Profile",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/users/profile/{{userId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "profile", "{{userId}}"]
+            },
+            "description": "Get a user's public profile"
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Users (Admin)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/users",
+              "host": ["{{baseUrl}}"],
+              "path": ["users"]
+            },
+            "description": "Get all users (requires admin role)"
+          },
+          "response": []
+        }
+      ],
+      "description": "User profile management endpoints"
+    },
+    {
+      "name": "Images",
+      "item": [
+        {
+          "name": "Upload Post Image",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData && jsonData.public_id) {",
+                  "    pm.environment.set(\"imageId\", jsonData.public_id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "image",
+                  "type": "file",
+                  "src": "/path/to/your/image.jpg"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/images/upload/post",
+              "host": ["{{baseUrl}}"],
+              "path": ["images", "upload", "post"]
+            },
+            "description": "Upload an image for a blog post"
+          },
+          "response": []
+        },
+        {
+          "name": "Upload Profile Image",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "image",
+                  "type": "file",
+                  "src": "/path/to/your/image.jpg"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/images/upload/profile",
+              "host": ["{{baseUrl}}"],
+              "path": ["images", "upload", "profile"]
+            },
+            "description": "Upload a profile image"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Image",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"public_id\": \"{{imageId}}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/images/delete",
+              "host": ["{{baseUrl}}"],
+              "path": ["images", "delete"]
+            },
+            "description": "Delete an image from Cloudinary"
+          },
+          "response": []
+        }
+      ],
+      "description": "Image upload and management endpoints"
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000/api",
+      "type": "string"
+    }
+  ]
+}
